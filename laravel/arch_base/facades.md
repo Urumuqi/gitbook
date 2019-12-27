@@ -23,7 +23,7 @@ Route::get('/cache', function () {
 
 依赖注入的一个主要的优势在于替换需要注入类的不同的实现。这种特性在测试的时候非常有用，我们可以根据需要伪造或者构造一个子类，断言子类的的方法存根。
 
-典型的差别是，`facades` 不可以伪造或者存根一个真正的静态方法。由于 `facades` 是使用魔术方法来调用服务容器中类的方法调用，我们也可以像测试类注入一样测试 `facades`。以下是示例：
+典型的差别是，`facades` 不可以伪造或者存根一个真正的静态方法。由于 `facades` 是使用魔术方法来调用服务容器中类的方法，我们也可以像测试类注入一样测试 `facades`。以下是示例：
 
 ```php
 use Illuminate\Support\Facades\Cache;
@@ -56,7 +56,7 @@ public function testBasicExample()
 
 ## `Facades` 和 辅助方法
 
-除了 `facades` 以外， `laravel` 还提供了助手方法来执行通用的任务，比如生成视图，启动事件，分发任务，发送 `HTTP` 响应。很多助手函数都要对应的 `facade` 来完成相同的功能，比如以下两个调用是等价的：
+除了 `facades` 以外， `laravel` 还提供了助手方法来执行通用的任务，比如生成视图，启动事件，分发任务，发送 `HTTP` 响应。很多助手函数都有对应的 `facade` 来完成相同的功能，比如以下两个调用是等价的：
 
 ```php
 return View::make('profile');
@@ -64,7 +64,7 @@ return View::make('profile');
 return view('profile');
 ```
 
-在 `facades` 和助手函数之间没有明显的差别。使用助手函数的时候，我们可以通过测试 `facades` 的方式来测试助手函数，以下给出一个实例:
+在 `facades` 和助手函数之间没有实质的差别。使用助手函数的时候，我们可以通过测试 `facades` 的方式来测试助手函数，以下给出一个实例:
 
 ```php
 Route::get('/cache', function () {
