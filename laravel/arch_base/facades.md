@@ -126,7 +126,7 @@ class UserController extends Controller
 
 这里需要注意文件顶部 `导入` 了 `Cache Facade`。这个 `Facade` 提供了一个代理来方便访问 `Illuminate\Contracts\Cache\Factory` 接口的具体实现。任何对当前 `Facade` 的调用都会访问到 `laravel` 的缓存服务实例.
 
-我们去阅读 `Illuminate\Support\Facades\Cache` 累的源码， 会发现这个类里并没有 `get` 这个静态方法:
+我们去阅读 `Illuminate\Support\Facades\Cache` 类的源码， 会发现这个类里并没有 `get` 这个静态方法:
 
 ```php
 class Cache extends Facade
@@ -144,4 +144,139 @@ class Cache extends Facade
 
 # 实时 `Facades`
 
-# `Facades` 使用说明
+使用实时 `facades` ，可以把应用中所有的类都当作是 `facade`。为了阐明怎么产生作用，我们从另外一个角度来验证。通过一个示例来说明，假设 `Podcast` 这个模型有一个 `publish` 方法。然而，为了发布这个广播，我们需要注入一个 `Publisher` 实例:
+
+```php
+<?php
+
+namespace App;
+
+use App\Contracts\Publisher;
+use Illuminate\Database\Eloquent\Model;
+
+class Podcast extends Model
+{
+    /**
+     * Publish the podcast.
+     *
+     * @param  Publisher  $publisher
+     * @return void
+     */
+    public function publish(Publisher $publisher)
+    {
+        $this->update(['publishing' => now()]);
+
+        $publisher->publish($this);
+    }
+}
+```
+
+我们通过注入一个构造的 `Publisher` 类来独立的测试这个 `发布` 方法。然而，却需要我们每次在调用 `publish` 方法是都传入一个 `Publisher` 实例。使用实时 `Facades` 时，我们可以保持这种测试便利性，同时不需要显式地传入一个 `Publisher` 实例。通过在需要导入的类名称空间增加前缀 `Facades` 来创建一个实时 `Facade`:
+
+```php
+<?php
+
+namespace App;
+
+use Facades\App\Contracts\Publisher;
+use Illuminate\Database\Eloquent\Model;
+
+class Podcast extends Model
+{
+    /**
+     * Publish the podcast.
+     *
+     * @return void
+     */
+    public function publish()
+    {
+        $this->update(['publishing' => now()]);
+
+        Publisher::publish($this);
+    }
+}
+```
+
+当使用了实时 `Facade`，`Publisher` 类的的实例会根据导入语句中 `Facades` 后出现的接口或者类名来自动的从服务容器中导入到当前类。测试的时候，可以使用 `laravel` 内置的测试助手函数来构造调用方法:
+
+```php
+<?php
+
+namespace Tests\Feature;
+
+use App\Podcast;
+use Tests\TestCase;
+use Facades\App\Contracts\Publisher;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
+class PodcastTest extends TestCase
+{
+    use RefreshDatabase;
+
+    /**
+     * A test example.
+     *
+     * @return void
+     */
+    public function test_podcast_can_be_published()
+    {
+        $podcast = factory(Podcast::class)->create();
+
+        Publisher::shouldReceive('publish')->once()->with($podcast);
+
+        $podcast->publish();
+    }
+}
+```
+
+# `Facade` 类说明
+
+以下给出了框架中所有 `Facade` 对应的类文件。阅读 `Facade` 目录下的源码可以帮助我们快速的了解 `Facade`。包含服务容器中绑定的名称。
+
+Facade    |     Class    |     Service Container Binding
+------------- | ---------------------- | -------------------
+App    |     Illuminate\Foundation\Application    |     app
+Artisan    |     Illuminate\Contracts\Console\Kernel    |     artisan
+Auth    |     Illuminate\Auth\AuthManager    |     auth
+Auth (Instance)    |     Illuminate\Contracts\Auth\Guard    |     auth.driver
+Blade    |     Illuminate\View\Compilers\BladeCompiler    |     blade.compiler
+Broadcast    |     Illuminate\Contracts\Broadcasting\Factory |
+Broadcast (Instance)    |     Illuminate\Contracts\Broadcasting\Broadcaster |
+Bus    |     Illuminate\Contracts\Bus\Dispatcher |
+Cache    |     Illuminate\Cache\CacheManager    |     cache
+Cache (Instance)    |     Illuminate\Cache\Repository    |     cache.store
+Config    |     Illuminate\Config\Repository    |     config
+Cookie    |     Illuminate\Cookie\CookieJar    |     cookie
+Crypt    |     Illuminate\Encryption\Encrypter    |     encrypter
+DB    |     Illuminate\Database\DatabaseManager    |     db
+DB (Instance)    |     Illuminate\Database\Connection    |     db.connection
+Event    |     Illuminate\Events\Dispatcher    |     events
+File    |     Illuminate\Filesystem\Filesystem    |     files
+Gate    |     Illuminate\Contracts\Auth\Access\Gate
+Hash    |     Illuminate\Contracts\Hashing\Hasher    |     hash
+Lang    |     Illuminate\Translation\Translator    |     translator
+Log    |     Illuminate\Log\LogManager    |     log
+Mail    |     Illuminate\Mail\Mailer    |     mailer
+Notification    |     Illuminate\Notifications\ChannelManager |
+Password    |     Illuminate\Auth\Passwords\PasswordBrokerManager    |     auth.password
+Password (Instance)    |     Illuminate\Auth\Passwords\PasswordBroker    |     auth.password.broker
+Queue    |     Illuminate\Queue\QueueManager    |     queue
+Queue (Instance)    |     Illuminate\Contracts\Queue\Queue    |     queue.connection
+Queue (Base Class)    |     Illuminate\Queue\Queue |
+Redirect    |     Illuminate\Routing\Redirector    |     redirect
+Redis    |     Illuminate\Redis\RedisManager    |     redis
+Redis (Instance)    |     Illuminate\Redis\Connections\Connection    |     redis.connection
+Request    |     Illuminate\Http\Request    |     request
+Response    |     Illuminate\Contracts\Routing\ResponseFactory |
+Response (Instance)    |     Illuminate\Http\Response |
+Route    |     Illuminate\Routing\Router    |     router
+Schema    |     Illuminate\Database\Schema\Builder |
+Session    |     Illuminate\Session\SessionManager    |     session
+Session (Instance)    |     Illuminate\Session\Store    |     session.store
+Storage    |     Illuminate\Filesystem\FilesystemManager    |     filesystem
+Storage (Instance)    |     Illuminate\Contracts\Filesystem\Filesystem    |     filesystem.disk
+URL    |     Illuminate\Routing\UrlGenerator    |     url
+Validator    |     Illuminate\Validation\Factory    |     validator
+Validator (Instance)    |     Illuminate\Validation\Validator |
+View    |     Illuminate\View\Factory    |     view
+View (Instance)    |     Illuminate\View\View    |
