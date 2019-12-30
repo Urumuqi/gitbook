@@ -16,3 +16,6 @@
     * [Service Providers](laravel/arch_base/service_provider.md)
     * [Facades](laravel/arch_base/facades.md)
     * [Contracts](laravel/arch_base/contracts.md)
+
+* [wechat](wechat/index.md)
+  * [微信支付流程](/wechat/wechat_pay/index.md)
