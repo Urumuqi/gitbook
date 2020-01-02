@@ -12,7 +12,7 @@
 4. 服务端接受支付通知[【支付结果通知api】](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_7)
 5. 服务端查询支付结果[【查询订单api】](https://pay.weixin.qq.com/wiki/doc/api/wxa/wxa_api.php?chapter=9_2)
 
-## 名次解释
+## 名词解释
 
 1. 微信公众平台
 
