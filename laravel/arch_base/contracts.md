@@ -145,7 +145,7 @@ class CacheOrderInformation
 以下是所有的 `Contracts` 列表，以及对应的 `Facades`:
 
 Contract    |    References Facade
-------------|------------------|--------------------------
+------------|------------------
 Illuminate\Contracts\Auth\Access\Authorizable |
 Illuminate\Contracts\Auth\Access\Gate    |    Gate
 Illuminate\Contracts\Auth\Authenticatable |
