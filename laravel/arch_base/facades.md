@@ -1,5 +1,6 @@
+# Facades
 
-# 介绍
+## 介绍
 
 `Facades` 是应用框架服务容器中类的静态接口，`laravel` 所有的内置模块都提供了 `facades` 以便于使用。 `laravel` 框架的 `facades` 就像是框架服务容器中类的静态代理，和传统的静态方法相比，更加的简洁明了，更容易测试，更具灵活性。
 
@@ -13,13 +14,13 @@ Route::get('/cache', function () {
 });
 ```
 
-# 什么时候使用 `Facades`
+## 什么时候使用 `Facades`
 
 `facades` 有很多的优势。提供简洁而语义清晰的表达式来使用 `laravel` 的特性，避免了记忆和编码配置较长的类名。此外，由于独特的使用PHP的魔术方法，使得 `facades` 很容易被测试。
 
 然而， 在使用 `facades` 过程中有些方面一定要特别注意。最需要注意的是 `facades` 作用域扩散。鉴于 `facades` 便于使用和不需要注入，很容易导致一个单一的类中使用了大量的 `facades` 导致类过于臃肿。在使用依赖注入的时候，构造函数可以在视觉上告诉我们当前类已经变得臃肿。所以，我们在使用 `facades` 的时候，一定特别注意保持类的大小合理并且职责单一。
 
-## `Facades` 和 依赖注入
+### `Facades` 和 依赖注入
 
 依赖注入的一个主要的优势在于替换需要注入类的不同的实现。这种特性在测试的时候非常有用，我们可以根据需要伪造或者构造一个子类，断言子类的的方法存根。
 
@@ -54,7 +55,7 @@ public function testBasicExample()
 }
 ```
 
-## `Facades` 和 辅助方法
+### `Facades` 和 辅助方法
 
 除了 `facades` 以外， `laravel` 还提供了助手方法来执行通用的任务，比如生成视图，启动事件，分发任务，发送 `HTTP` 响应。很多助手函数都有对应的 `facade` 来完成相同的功能，比如以下两个调用是等价的：
 
@@ -93,7 +94,7 @@ public function testBasicExample()
 }
 ```
 
-# `Facades` 工作原理
+## `Facades` 工作原理
 
 在 `laravel` 应用中，`facade` 类提供了一个访问容器内部对象的方法。具体的实现原理可以在 `Facade` 类定义文件中找到。`laravel` 框架和用户自定义的 `facades` 都必须继承 `Illuminate\Support\Facades\Facade`。
 
@@ -142,7 +143,7 @@ class Cache extends Facade
 
 而是继承了 `Facade` 基类的 `Cache`，`Cache` 类中只定了一个方法 `getFacadeAccessor()` 。这个方法的目的是返回服务容器中绑定的服务名称。当从 `Cache` 访问任何静态方法时，`laravel` 都会从服务容器中找到与之（绑定的服务名称）绑定的服务，并在服务上执行方法调用。
 
-# 实时 `Facades`
+## 实时 `Facades`
 
 使用实时 `facades` ，可以把应用中所有的类都当作是 `facade`。为了阐明怎么产生作用，我们从另外一个角度来验证。通过一个示例来说明，假设 `Podcast` 这个模型有一个 `publish` 方法。然而，为了发布这个广播，我们需要注入一个 `Publisher` 实例:
 
@@ -229,7 +230,7 @@ class PodcastTest extends TestCase
 }
 ```
 
-# `Facade` 类说明
+## `Facade` 类说明
 
 以下给出了框架中所有 `Facade` 对应的类文件。阅读 `Facade` 目录下的源码可以帮助我们快速的了解 `Facade`。包含服务容器中绑定的名称。
 
