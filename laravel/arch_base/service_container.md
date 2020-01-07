@@ -5,7 +5,7 @@
   * [基础绑定](#基础绑定)
   * [绑定接口和实现](#绑定接口和实现)
   * [上下文绑定](#上下文绑定)
-  * [标签](#标签)
+  * [标签绑定](#标签绑定)
   * [绑定继承](#绑定继承)
 * [提取](#提取)
   * [make方法](#make方法)
@@ -145,16 +145,149 @@ public function __construct(EventPusher $pusher)
 
 ### 上下文绑定
 
-### 标签
+某些情况下对相同的接口有不同的实现，我们希望在不同的类中加载不同的实现。比如，有两个控制器依赖`Illuminate\Contracts\Filesystem\Filesystem` 这个`contract`。`Laravel`提供了简洁方便的方式来实现这种行为：
+
+```php
+use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\VideoController;
+use Illuminate\Contracts\Filesystem\Filesystem;
+
+$this->app->when(PhotoController::class)
+          ->needs(Filesystem::class)
+          ->give(function () {
+              return Storage::disk('local');
+          });
+
+$this->app->when([VideoController::class, UploadController::class])
+          ->needs(Filesystem::class)
+          ->give(function () {
+              return Storage::disk('s3');
+          });
+```
+
+### 标签绑定
+
+偶尔，我们也需要通过标签来完成依赖绑定关系。比如，我们需要构造一个告警接收器来接收`Report`接口的不同的具体告警消息。在注册了`Report`具体实现之后，我们通过`tag`方法来完成依赖指定：
+
+```php
+$this->app->bind('SpeedReport', function () {
+    //
+});
+
+$this->app->bind('MemoryReport', function () {
+    //
+});
+
+$this->app->tag(['SpeedReport', 'MemoryReport'], 'reports');
+```
+
+一旦服务被打上标记之后，我们就能简单的通过`tagged`方法来调用这些绑定的服务对象。
 
 ### 绑定继承
+
+`extend`方法可以允许修改要实现的服务。比如，当一个服务被应用的时候，我们可以通过额外的代码来完善或者配置服务。`extend`方法接收闭包作为唯一的参数，同时闭包必须返回被修改过的服务对象：
+
+```php
+$this->app->extend(Service::class, function ($service) {
+    return new DecoratedService($service);
+});
+```
 
 ## 提取
 
 ### make方法
 
+可以通过`make`方法从容器中提取出一个类的实例。`make`方法接收要提取的类命或者接口名作为参数:
+
+```php
+$api = $this->app->make('HelpSpot\API');
+```
+
+如果当前的代码环境无法使用`$app`全局变量，可以使用`resolve`这个助手函数:
+
+```php
+$api = resolve('HelpSpot\API');
+```
+
+如果当前的类依赖环境下无法从容器中提取对象，可以通过`makeWith`方法加额外的参数数组来获取服务的实例:
+
+```php
+$api = $this->app->makeWith('HelpSpot\API', ['id' => 1]);
+```
+
 ### 自动注入
+
+另外，更重要的是，我们可以在构造函数中通过类型提示来注入容器中的类，包括控制器，事件监听器，中间件，等。另外，可以通过`handle`方法的类型提示来注入队列任务的依赖。总之，这是通常情况下容器管理对象的方式。
+
+比如，我们在控制器的构造方法中通过类型提示来注入数据源。数据源对象将被自动的实例化并注入到控制器类中：
+
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Users\Repository as UserRepository;
+
+class UserController extends Controller
+{
+    /**
+     * The user repository instance.
+     */
+    protected $users;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param  UserRepository  $users
+     * @return void
+     */
+    public function __construct(UserRepository $users)
+    {
+        $this->users = $users;
+    }
+
+    /**
+     * Show the user with the given ID.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        //
+    }
+}
+```
 
 ## 容器事件
 
+服务容器每次对对象的操作都会触发一个事件。可以通过`resolving`方法来监听事件:
+
+```php
+$this->app->resolving(function ($object, $app) {
+    // Called when container resolves object of any type...
+});
+
+$this->app->resolving(HelpSpot\API::class, function ($api, $app) {
+    // Called when container resolves objects of type "HelpSpot\API"...
+});
+```
+
+正如看到的情况，对象被实例化的事件会被传达到回调函数，这就允许我们在对象被正式使用前修改它的属性。
+
 ## PSR-11
+
+`Laravel` 服务容器实现了`PSR-11`接口。所以，我们可以通过`PSR-11`容器接口来获取一个`Laravel`的容器:
+
+```php
+use Psr\Container\ContainerInterface;
+
+Route::get('/', function (ContainerInterface $container) {
+    $service = $container->get('Service');
+
+    //
+});
+```
+
+如果给出的标识符代表的对象不能被实例化将抛出异常。如果标识符代表的对象在同其中不存在，异常将是`Psr\Container\NotFoundExceptionInterface`的一个实例。如果标识符代表的对象存在，但是不能被提取实例，将会抛出一个`Psr\Container\ContainerExceptionInterface`异常。
