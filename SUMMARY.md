@@ -18,13 +18,13 @@
     - [Contracts](laravel/arch_base/contracts.md)
   - [Laravel Dev Frame](laravel/custom/demo_frame.md)
 
-- [wechat](wechat/index.md)
+- [微信开发](wechat/index.md)
   - [微信支付流程](/wechat/wechat_pay/index.md)
 
-- [spark](spark/index.md)
+- [读书](spark/index.md)
   - [浪潮之巅](spark/浪潮之巅/index.md)
 
-- [newbie](newbie/index.md)
+- [菜鸟](newbie/index.md)
   - [gRPC](newbie/gRPC/index.md)
   - [HTTP/2](newbie/http2.md)
 
