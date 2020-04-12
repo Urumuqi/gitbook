@@ -27,6 +27,7 @@
 - [读书](spark/index.md)
   - [浪潮之巅](spark/浪潮之巅/index.md)
   - [2020-03](spark/2020-03/29.md)
+  - [这就是OKR](spark/这就是OKR/index.md)
 
 - [菜鸟](newbie/index.md)
   - [gRPC](newbie/gRPC/index.md)
