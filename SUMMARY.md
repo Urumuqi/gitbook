@@ -28,6 +28,7 @@
   - [浪潮之巅](spark/浪潮之巅/index.md)
   - [2020-03](spark/2020-03/29.md)
   - [这就是OKR](spark/MeasureWhatMatters/index.md)
+  - [安迪格鲁夫给经理人的第一课](/spark/格鲁夫给经理人的第一课/index.md)
 
 - [菜鸟](newbie/index.md)
   - [gRPC](newbie/gRPC/index.md)
