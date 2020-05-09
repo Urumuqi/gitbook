@@ -1,0 +1,3 @@
+{
+    "plugins": ["-highlight", "prism", "prism-themes"]
+}
