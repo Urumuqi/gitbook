@@ -3,6 +3,7 @@
 - [Introduction](README.md)
 
 - [mysql](mysql/README.md)
+  - [2020-05-12](mysql/newbie/2020-05/12.md)
   - [innodb](mysql/innodb.md)
 
 - [zss](zss/README.md)
