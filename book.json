@@ -1,3 +1,38 @@
 {
-    "plugins": ["-highlight", "prism", "prism-themes"]
+    "plugins": [
+        "-highlight",
+        "-lunr",
+        "-search",
+        "-sharing",
+        "prism",
+        "prism-themes",
+        "back-to-top-button",
+        "chapter-fold",
+        "expandable-chapters",
+        "code",
+        "splitter",
+        "search-pro",
+        "pageview-count",
+        "hide-element",
+        "tbfed-pagefooter",
+        "github"
+    ],
+    "pluginConfig": {
+        "hide-element": {
+            "elements": [".gitbook-link"]
+        },
+        "tbfed-pagefooter": {
+            "copyright": "Copyright &copy 知世说@urumuqi 2020",
+            "modify_label": "article last edit time : ",
+            "modify_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        "github": {
+            "url": "https://github.com/Urumuqi/gitbook"
+        },
+        "prism": {
+            "css": [
+              "prismjs/themes/prism-xonokai.css"
+            ]
+        }
+    }
 }

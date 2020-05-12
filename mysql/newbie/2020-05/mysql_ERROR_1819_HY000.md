@@ -7,7 +7,7 @@
 ## 问题解决思路
 
 - 既然是触发了安全规范，那么当前数据库的安全规范是什么呢？MySQL肯定有明确的标记， 要不然我们怎么知道安全规则是什么呢。。。。这里就要涉及到一个MySQL参数：validate_password_policy，默认值如下：
-![MySQL密码强度](https://files.jb51.net/file_images/article/201610/2016102293020153.jpg "MySQL密码强度")
+![MySQL密码强度](../../../img/mysql/mysql_password_policy.jpg)
 
 ```sql
     mysql> select @@validate_password_policy;
