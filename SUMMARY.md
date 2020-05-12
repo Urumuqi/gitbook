@@ -7,7 +7,7 @@
     - [12](mysql/newbie/2020-05/12.md)
     - [mysql dump](mysql/newbie/2020-05/mysql_dump.md)
     - [connect2mysqld](mysql/newbie/2020-05/connect2mysqld.md)
-    - [mysql.ERROR.1819(HY000)](mysql/newbie/2020-05/mysql.ERROR.1819(HY000).md)
+    - [mysql.ERROR.1819(HY000)](mysql/newbie/2020-05/mysql_ERROR_1819_HY000.md)
   - [innodb](mysql/innodb.md)
 
 - [zss](zss/README.md)
