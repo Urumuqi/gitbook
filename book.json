@@ -1,15 +1,16 @@
 {
     "plugins": [
-        "-highlight",
         "-lunr",
         "-search",
         "-sharing",
+        "-livereload",
+        "-fontsettings",
         "prism",
-        "prism-themes",
+        "-highlight",
         "back-to-top-button",
         "chapter-fold",
-        "expandable-chapters",
-        "code",
+        "expandable-chapters-small",
+        "copy-code-button",
         "splitter",
         "search-pro",
         "pageview-count",
@@ -27,7 +28,7 @@
         },
         "prism": {
             "css": [
-              "prism-themes/themes/prism-material-oceanic.css"
+              "prismjs/themes/prism-tomorrow.css"
             ]
         }
     }
