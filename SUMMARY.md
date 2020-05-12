@@ -3,7 +3,11 @@
 - [Introduction](README.md)
 
 - [mysql](mysql/README.md)
-  - [2020-05-12](mysql/newbie/2020-05/12.md)
+  - [2020-05](mysql/newbie/2020-05/index.md)
+    - [12](mysql/newbie/2020-05/12.md)
+    - [mysql dump](mysql/newbie/2020-05/mysql_dump.md)
+    - [connect2mysqld](mysql/newbie/2020-05/connect2mysqld.md)
+    - [mysql.ERROR.1819(HY000)](mysql/newbie/2020-05/mysql.ERROR.1819(HY000).md)
   - [innodb](mysql/innodb.md)
 
 - [zss](zss/README.md)
@@ -34,6 +38,5 @@
 - [菜鸟](newbie/index.md)
   - [gRPC](newbie/gRPC/index.md)
   - [HTTP/2](newbie/http2.md)
-  - [thoughts]()
 
 - [软件工程](software_engineering/index.md)
