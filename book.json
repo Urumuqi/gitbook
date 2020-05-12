@@ -13,25 +13,21 @@
         "splitter",
         "search-pro",
         "pageview-count",
-        "hide-element",
         "tbfed-pagefooter",
         "github"
     ],
-    "pluginConfig": {
-        "hide-element": {
-            "elements": [".gitbook-link"]
-        },
-        "tbfed-pagefooter": {
-            "copyright": "Copyright &copy 知世说@urumuqi 2020",
-            "modify_label": "article last edit time : ",
-            "modify_format": "YYYY-MM-DD HH:mm:ss"
-        },
+    "pluginsConfig": {
         "github": {
             "url": "https://github.com/Urumuqi/gitbook"
         },
+        "tbfed-pagefooter": {
+            "copyright": "Copyright &copy urumuqi@知世说 2020",
+            "modify_label": "article last edit time : ",
+            "modify_format": "YYYY-MM-DD HH:mm:ss"
+        },
         "prism": {
             "css": [
-              "prismjs/themes/prism-xonokai.css"
+              "prism-themes/themes/prism-material-oceanic.css"
             ]
         }
     }
