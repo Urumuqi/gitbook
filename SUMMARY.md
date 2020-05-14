@@ -26,6 +26,9 @@
   - [DiggingDeeper](laravel/digging_deeper/package_develop.md)
   - [Laravel Dev Frame](laravel/custom/demo_frame.md)
 
+- [linux](linux/index.md)
+  - [ubuntu swap](linux/swap.md)
+
 - [微信开发](wechat/index.md)
   - [微信支付流程](/wechat/wechat_pay/index.md)
 
