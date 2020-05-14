@@ -29,6 +29,11 @@
 - [linux](linux/index.md)
   - [ubuntu swap](linux/swap.md)
 
+- [elk](elk/index.md)
+  - [elasticsearch](elk/elasticsearch/steps-records.md)
+  - [kibana]
+  - [logstash]
+
 - [微信开发](wechat/index.md)
   - [微信支付流程](/wechat/wechat_pay/index.md)
 
