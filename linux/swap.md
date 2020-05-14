@@ -31,4 +31,10 @@ vim /etc/fstab
 
 ```bash
 free -h
+
+┌─[root@sf-dev] - [/] - [Thu May 14, 11:23]
+└─[$] <> free -h
+              总计         已用        空闲      共享    缓冲/缓存    可用
+内存：         11G        1.5G        1.1G         74M        9.1G        9.8G
+交换：         21G        4.0M         21G
 ```
