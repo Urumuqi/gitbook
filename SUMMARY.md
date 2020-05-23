@@ -13,7 +13,7 @@
 - [zss](zss/README.md)
 
 - [Redis](redis/index.md)
-  - [2020-05]
+  - [2020-05](redis/index.md)
     - [stop-writes-one-bgsave-error](redis/2020-05/stop-writes-on-bgsave-error.md)
 
 - [Docker](docker/index.md)
