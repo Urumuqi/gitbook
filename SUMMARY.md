@@ -44,7 +44,7 @@
   - [2020-03](spark/2020-03/29.md)
   - [这就是OKR](spark/MeasureWhatMatters/index.md)
   - [安迪格鲁夫给经理人的第一课](/spark/格鲁夫给经理人的第一课/index.md)
-  - [2020-05]()
+  - [2020-05](thinking/2020-05/sunk-cost.md)
     - [Sunk Cost](thinking/2020-05/sunk-cost.md)
 
 - [菜鸟](newbie/index.md)
