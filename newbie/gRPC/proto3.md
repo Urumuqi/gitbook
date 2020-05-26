@@ -2,7 +2,7 @@
 
 ## Defining A Message Type
 
-```proto3
+```
 syntax = "proto3";
 
 message SearchRequest {
@@ -36,7 +36,7 @@ message SearchRequest {
 
 ### 添加更新消息体类型
 
-```proto3
+```
 message SearchRequest {
   string query = 1;
   int32 page_number = 2;
@@ -52,7 +52,7 @@ message SearchResponse {
 
 使用 `//` 单行注释, `/* */` 多行注释
 
-```proto3
+```
 /* SearchRequest represents a search query, with pagination options to
  * indicate which results to include in the response. */
 
@@ -67,7 +67,7 @@ message SearchRequest {
 
 如果修改一个 `message` 字段， 比如删除一个字段，或者注释一个字段，之后的用户可以在之后的修改中继续使用之前的字段编号。如果在之后使用了旧版本的 `.proto` 文件，将出现数据冲突，字段泄漏等问题。一个解决办法就是确保已经删除的字段和编号成为保留值。 `protocol buffer compiler` 在后续的编译中将会出现对应的提示。
 
-```proto3
+```
 message Foo {
   reserved 2, 15, 9 to 11;
   reserved "foo", "bar";
@@ -116,7 +116,7 @@ bytes | May contain any arbitrary sequence of bytes no longer than 232. | string
 
 ## 枚举类型
 
-```proto3
+```
 message SearchRequest {
   string query = 1;
   int32 page_number = 2;
@@ -140,7 +140,7 @@ message SearchRequest {
 
 如果定义的不同的 `枚举类型` 包含同样的定义值， 可以使用 `allow_alias = true` 别名， 否则 `protocol compiler` 变异会报错。
 
-```proto3
+```
 message MyMessage1 {
   enum EnumAllowingAlias {
     option allow_alias = true;
@@ -162,7 +162,7 @@ message MyMessage2 {
 
 如果修改了枚举类型的定义值，在后续的变更中可能会出现使用上的误会和错误。为了解决这个问题， 可以讲废弃或者删除的枚举值定义为`保留值`。
 
-```proto3
+```
 enum Foo {
   reserved 2, 15, 9 to 11, 40 to max;
   reserved "FOO", "BAR";
@@ -171,7 +171,7 @@ enum Foo {
 
 ## 使用更多的消息体类型
 
-```proto3
+```
 message SearchResponse {
   repeated Result results = 1;
 }
@@ -187,25 +187,25 @@ message Result {
 
 如果现在在消息体中定义一个在其他 `.proto` 文件定义的类型，可以导入`.proto` 文件：
 
-```proto3
+```
 import "myproject/other_protos.proto";
 ```
 
 如果导入的 `.proto` 文件位置发生了变更，但是文件已经被其他 `proto` 文件引用，可以在原来的位置放一个`假的.proto`文件，将新的`.proto`文件引入到原来的位置。原来`.proto`文件的假文件，使用 `import public` 来透明的为外部依赖提供支持:
 
-```proto3
+```
 // new.proto
 // All definitions are moved here
 ```
 
-```proto3
+```
 / old.proto
 // This is the proto that all clients are importing.
 import public "new.proto";
 import "other.proto";
 ```
 
-```proto3
+```
 // client.proto
 import "old.proto";
 // You use definitions from old.proto and new.proto, but not other.proto
@@ -217,7 +217,7 @@ import "old.proto";
 
 ## 嵌套类型
 
-```proto3
+```
 message SearchResponse {
   message Result {
     string url = 1;
@@ -230,7 +230,7 @@ message SearchResponse {
 
 如果要在消息体外使用嵌套的类型，可以用以下的方式:
 
-```proto3
+```
 message SomeOtherMessage {
   SearchResponse.Result result = 1;
 }
@@ -238,7 +238,7 @@ message SomeOtherMessage {
 
 或者是层层嵌套
 
-```proto3
+```
 message Outer {                  // Level 0
   message MiddleAA {  // Level 1
     message Inner {   // Level 2
