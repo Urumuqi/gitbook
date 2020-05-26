@@ -49,6 +49,7 @@
 
 - [菜鸟](newbie/index.md)
   - [gRPC](newbie/gRPC/index.md)
+    - [proto3](newbie/gRPC/proto3.md)
   - [HTTP/2](newbie/http2.md)
   - [gitbook](newbie/gitbook.md)
 
