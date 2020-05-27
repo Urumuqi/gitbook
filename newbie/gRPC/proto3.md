@@ -491,3 +491,69 @@ Empty | object | {} | An empty JSON object
 
 ## 配置项 `option`
 
+`.proto`文件中可以包含多个`option`配置。`option`只有在一定上下文环境中才会产生一定的作用。一个完整的`option`可选列表可以在`google/protobuf/descriptor.proto`文件中找到。
+
+有些`option`配置是文件级别的，意味着这些定义要放到文件的顶级作用域中，意味着不能定义在`message`,`enum`,`service`类型内；有些`option`配置是`消息体`作用域的，意味着只能存在于`消息体`内；有些`option`是字段作用域的，意味着只能用到字段定义内部；`option`也可以和枚举类型、枚举值、`oneof`字段、服务类型和`rpc`方法，现状是没有有效的`option`配置对以上提到的这些类型生效（why u say that）。
+
+以下说明几个常用的`option`配置：
+
+- `java_package`: 这是文件作用域的配置，在生成`Java`代码是产生作用，指定生成的`Java`代码的包路径。如果没有配置这个值，则会使用`.proto`文件中默认的`package`关键值指定的包作为`Java`代码包名。如果不是用来生成`Java`代码，这个配置将不起作用
+
+  ```lolcode
+  option java_package = "com.example.foo";
+  ```
+
+- `java_multiple_files`: 生成`Java`代码时，最外层级的`消息体`、枚举、服务生成单独的`Java`类。如果值为`false`则会生成一个`.proto`文件名相同的嵌套的类文件
+
+  ```lolcode
+  option java_multiple_files = true;
+  ```
+
+- `java_outer_classname`: 文件作用域配置，用来配置生成的`Java`代码的的类名称，如果没有配置默认值，则类名是`.proto`文件名的驼峰命名格式，对生成非`Java`代码不生效
+
+  ```lolcode
+  option java_outer_classname = "Ponycopter";
+  ```
+
+- `optimize_for`: 文件级别的作用域。可以有三个值：`SPEED`,`CODE_SIZE`,`LITE_RUNTIME`。这个配置会影响`C++`和`Java`代码的生成
+  - `SPEED`: 默认值。`protocol buffer compiler`在生成代码时对序列化，解析，和操作优化消息都有优化。生成的代码是高度优化过的
+  - `CODE_SIZE`: 生成最小化的类文件，通过共享基础类型的反射来完成序列化、编码和其他操作。生成代码的体积会比`SPEED`模式下生成的代码更小。这种编译类型常用在`app`中包含了大量的`.proto`文件，并不需要每个操作都非常的快
+  - `LITE_RUNTIME`: 生成的类只依赖最小的运行时环境。这个轻量级的运行时比标准的运行时体量更小，但是同样包含标准的描述符和反射。这种特性在`app`和移动设备商非常有用。编译器同时也会生成`SPEED`模式下同样快的代码。在任何语言中生成的类都实现了`MessageLite`接口，提供了标准的`Message`接口的子集
+
+  ```lolcode
+  option optimize_for = CODE_SIZE;
+  ```
+
+- `cc_enable_arenas`: (file option) Enables arena allocation for C++ generated code
+- `objc_class_prefix`: (file option) Sets the Objective-C class prefix which is prepended to all Objective-C generated classes and enums from this .proto. There is no default. You should use prefixes that are between 3-5 uppercase characters as recommended by Apple. Note that all 2 letter prefixes are reserved by Apple
+- `deprecated`: 字段作用域。如果设置为`true`，表明字段被废弃，同时在以后的代码中不应该再使用这个字段。在大多数的语言中都没有实际的作用效果。`Java`语言中会增加`@Deprecated`注解。接下来在部分语言中可能在代码的编译阶段产生一个`warning`。如果字段被废弃了，可以考虑将字段加入到保留字段中
+
+  ```lolcode
+  int32 old_field = 6 [deprecated = true];
+  ```
+
+### 自定义`option`
+
+`protocol buffer`允许自己定义`option`。这个特性在大多数的情况下都不会遇到。如果需要自己定义`option`可以参考[`proto2 Language Guide`](https://developers.google.com/protocol-buffers/docs/proto#customoptions)。创建自定义`option`时只能使用`proto3`允许的插件配置。
+
+## 生成类文件
+
+`protoc`使用命令参数如下：
+
+```bash
+protoc --proto_path=IMPORT_PATH --cpp_out=DST_DIR --java_out=DST_DIR --python_out=DST_DIR --go_out=DST_DIR --ruby_out=DST_DIR --objc_out=DST_DIR --csharp_out=DST_DIR path/to/file.proto
+```
+
+- `IMPORT_PATH`: 指明`.proto`文件存放路径。可以使用多个`--proto_path`配置，会以顺序加载。`-I=IMPORT_PATH`是`--proto_path=IMPORT_PATH`的简写
+- 可以指定多个输出目标和目录：
+  - `--cpp_out` generates C++ code in DST_DIR. See the C++ generated code reference for more.
+  - `--java_out` generates Java code in DST_DIR. See the Java generated code reference for more.
+  - `--python_out` generates Python code in DST_DIR. See the Python generated code reference for more.
+  - `--go_out` generates Go code in DST_DIR. See the Go generated code reference for more.
+  - `--ruby_out` generates Ruby code in DST_DIR. Ruby generated code reference is coming soon!
+  - `--objc_out` generates Objective-C code in DST_DIR. See the Objective-C generated code reference for more.
+  - `--csharp_out` generates C# code in DST_DIR. See the C# generated code reference for more.
+  - `--php_out` generates PHP code in DST_DIR. See the PHP generated code reference for more.
+
+  有一取巧的用法，如果`DIS_DIR`是`.zip`,`.jar`结尾，则编译器会将生成的代码报错到`zip`压缩文件中，并命名为给出的文件名；`jar`文件也会添加一个`manifest`文件作为`jar`包的说明。如果文件已经存在，则编译器会重新覆盖整个文件，而不会增量覆盖，暂时没有那么智能
+- 不需要指定一个或者多个`.proto`文件作为输入。编译器会在相对路径下去找`.proto`文件，并结合文件名生成对应的文件
