@@ -335,7 +335,7 @@ message SampleMessage {
 
 - 设置`oneof`字段成员的一个字段，其他的字段的值将被清空。所有在顺序设置了多个`oneof`字段的情况下，只有最后一个字段持有被赋予的值
 
-  ```C++
+  ```cpp
     SampleMessage message;
     message.set_name("name");
     CHECK(message.has_name());
@@ -349,7 +349,7 @@ message SampleMessage {
 - 设置了一个`oneof`字段的默认值，该字段默认的`case`会被触发，同时默认值会按照顺序被序列化
 - 如果使用`C++`一定要确保不会导致内存崩溃。下列的代码将会崩溃，因为使用一个被删除的字段
 
-  ```C++
+  ```cpp
     SampleMessage message;
     SubMessage* sub_message = message.mutable_sub_message();
     message.set_name("name");      // Will delete sub_message
@@ -358,7 +358,7 @@ message SampleMessage {
 
 - `C++`中使用`Swap()`来操作两个`oneof`消息类型，结果会让这两个`oneof`类型发生交换：下面的列子中，`msg1`会拥有`sub_message`并且`msg2`会拥有`name`:
 
-  ```C++
+  ```cpp
     SampleMessage msg1;
     msg1.set_name("name");
     SampleMessage msg2;
