@@ -45,6 +45,7 @@
   - [这就是OKR](spark/MeasureWhatMatters/index.md)
   - [安迪格鲁夫给经理人的第一课](/spark/格鲁夫给经理人的第一课/index.md)
   - [稻盛和夫](spark/稻盛和夫/稻盛和夫的人生哲学.md)
+  - [克莱顿-克里斯坦森](spark/克莱顿-克里斯坦森/创新者的窘境.md)
   - [2020-05](thinking/2020-05/sunk-cost.md)
     - [Sunk Cost](thinking/2020-05/sunk-cost.md)
 
