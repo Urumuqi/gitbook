@@ -41,7 +41,7 @@ mysqldump -hhostname -uusername -ppassword -d databasename > /home/some_path/dat
 
 - 连接到数据库，切换到需要导入的数据库
 
-```bash
-use database_created;
-source /path_to_export_sql_file.sql
-```
+  ```bash
+  use database_created;
+  source /path_to_export_sql_file.sql
+  ```
