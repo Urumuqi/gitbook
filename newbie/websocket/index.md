@@ -64,6 +64,6 @@ public class GreetingController {
 - ws 客户端链接到 ws 接入点 `/portfolio`
 - `/topic/greeting` 路由进来的订阅通过 `clientInboundChannel` 被转发到 `broker`
 - 发送到 `/app/greeting` 的请求通过 `clientInboundChannel` 被转发到 `GreetingController`。控制器添加时间戳信息之后，返回的消息内容通过 `brokerChannel` 被发送给 `/topic/greeting`(目的地也可以通过`@SendTo`来重写)
-- `broker` 按顺序将消息通知到订阅者，都是通过`clientOutboundChanneld`发送
+- `broker` 按顺序将消息通知到订阅者，都是通过`clientOutboundChannel`发送
 
 **PS**: translate from [docs.spring.io:websocket](https://docs.spring.io/spring/docs/5.0.0.BUILD-SNAPSHOT/spring-framework-reference/html/websocket.html)
