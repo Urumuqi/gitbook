@@ -18,7 +18,7 @@
 
 - `clientInboundChannel` 处理来自 ws 客户端的消息
 - `clientOutboundChannle` 处理发送到 ws 客户端的消息
-- `brokerChannel` 应用中发送到 代理 的消息
+- `brokerChannel` 用来将应用中的消息发送到 `broker`
 
 这三个 `channel` 同样可以用于其他专用的 `broker`，下图中用 `StompBrokerRelay` 取代了 `SimpleBroker`:
 
