@@ -55,5 +55,6 @@
   - [HTTP/2](newbie/http2.md)
   - [gitbook](newbie/gitbook.md)
   - [markdown_language_list](newbie/markdown_language_list.md)
+  - [websocket](newbie/websocket/index.md)
 
 - [软件工程](software_engineering/index.md)
