@@ -56,5 +56,10 @@
   - [gitbook](newbie/gitbook.md)
   - [markdown_language_list](newbie/markdown_language_list.md)
   - [websocket](newbie/websocket/index.md)
+  - [日常笔录](newbie/thoughts/index.md)
+    - [2020-05](newbie/thoughts/2020-05/2020-05-06.md)
+      - [2020-05-06](newbie/thoughts/2020-05/2020-05-06.md)
+    - [2020-06](newbie/thoughts/2020-06/iaas-paas-saas.md)
+      - [IaaS-PaaS-SaaS](newbie/thoughts/2020-06/iaas-paas-saas.md)
 
 - [软件工程](software_engineering/index.md)
