@@ -50,6 +50,7 @@
     - [Sunk Cost](thinking/2020-05/sunk-cost.md)
 
 - [菜鸟](newbie/index.md)
+  - [blog摘记](newbie/note_1.md)
   - [gRPC](newbie/gRPC/index.md)
     - [proto3](newbie/gRPC/proto3.md)
   - [HTTP/2](newbie/http2.md)
