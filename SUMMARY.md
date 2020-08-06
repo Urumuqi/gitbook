@@ -12,6 +12,7 @@
   - [innodb](mysql/innodb.md)
 
 - [zss](zss/README.md)
+  - [部署备忘](zss/deploy.md)
 
 - [Redis](redis/index.md)
   - [2020-05](redis/index.md)
