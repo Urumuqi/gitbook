@@ -141,5 +141,5 @@ spring:
           predicates:
             - Path=/order/hello
           filters:
-            - My=false
+            - My=true
 ```
