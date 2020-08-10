@@ -2,6 +2,18 @@
 
 部署 `xxl-job` JAR 包时，龙老板用到了这个脚本，很棒。脚本代码如下：
 
+将该脚本赋予执行权限，并与`jar`包放到相同目录。
+
+```bash
+sudo chmod +x java_app.sh
+# start
+./java_app.sh start
+# restart
+./java_app.sh restart
+```
+
+从此告别`nohup java -jar xxxx`启动命令. 
+
 ```bash
 #!/bin/bash
 source /etc/profile
