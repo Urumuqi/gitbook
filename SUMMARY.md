@@ -34,6 +34,7 @@
   - [gateway-filter](java/spring-cloud/gateway-filter.md)
   - [HATEOAS](java/HATEOAS.md)
   - [JPA-Hibernate](java/JPA-Hibernate.md)
+  - [java_app.sh](java/java_app.md)
 
 - [linux](linux/index.md)
   - [ubuntu swap](linux/swap.md)
