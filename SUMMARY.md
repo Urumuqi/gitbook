@@ -29,6 +29,7 @@
     - [Contracts](laravel/arch_base/contracts.md)
   - [DiggingDeeper](laravel/digging_deeper/package_develop.md)
   - [Laravel Dev Frame](laravel/custom/demo_frame.md)
+  - [multi jwt auth guard](laravel/custom/multi-auth-guard.md)
 
 - [Java](java/roadmap.md)
   - [gateway-filter](java/spring-cloud/gateway-filter.md)
