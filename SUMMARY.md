@@ -36,9 +36,11 @@
   - [HATEOAS](java/HATEOAS.md)
   - [JPA-Hibernate](java/JPA-Hibernate.md)
   - [java_app.sh](java/java_app.md)
+  - [Java基础知识](java/base.md)
 
 - [linux](linux/index.md)
   - [ubuntu swap](linux/swap.md)
+  - [压缩和解压](linux/compress_decompress.md)
 
 - [elk](elk/index.md)
   - [elasticsearch](elk/elasticsearch/steps-records.md)
