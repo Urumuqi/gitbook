@@ -131,7 +131,7 @@
 
   ```bash
   # 解压: 
-  $ unrar x *.rar  /tmp
+  [＊＊＊＊＊＊＊]$ unrar x *.rar  /tmp
   # rar请到：http://www.rarsoft.com/download.htm 下载！
   # 解压后请将rar_static拷贝到/usr/bin目录（其他由$PATH环境变量指定的目录也行）：
   [＊＊＊＊＊＊＊]$ cp rar_static /usr/bin/rar
@@ -141,7 +141,16 @@
 
   ```bash
   # 解压：
-  xz -d linux-3.12.50.tar.xz
+  [＊＊＊＊＊＊＊]$ xz -d linux-3.12.50.tar.xz
   # 压缩：
-  xz -z linux-3.12.50.tar
+  [＊＊＊＊＊＊＊]$ xz -z linux-3.12.50.tar
+
+  # 安装 xz
+  # 1 下载包
+  [＊＊＊＊＊＊＊]$ wget http://tukaani.org/xz/xz-5.2.2.tar.gz
+  # 2 解压
+  [＊＊＊＊＊＊＊]$ tar -zxf xz-5.2.2.tar.gz
+  # 3 编译安装
+  [＊＊＊＊＊＊＊]$ ./configure  
+  [＊＊＊＊＊＊＊]$ make && make install
   ```
