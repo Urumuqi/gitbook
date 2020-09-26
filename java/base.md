@@ -405,3 +405,418 @@ Java中可以讲一个类定义在另外一个类的内部，就是 **内部类*
 - **重写**：发生在父类的子类中，方法名、参数列表必须相同，返回值小于等于父类，抛出的异常小于等于父类，访问的修饰符大于等于父类（里氏替换原则）；如果父类的方法修饰符是 `private` 则子类中不能重写
 
 ### 对象相等
+
+#### `==` 和 equals 的区别
+
+- `==`: 作用是判断两个对象的地址是否相等。即，判断两个对象是否是同一个对象；基本数据类型比较的是 **值**，引用数据类型比较的是 **内存地址**
+- equals(): 也是判断两个对象是否相等，有两种情况
+
+  - 类没有覆盖 equals() 方法。则通过 equals() 比较该类的两个对象时，等价于 `==` 比较两个对象
+  - 类覆盖了 equals*()。一般我们都通过覆盖 equals() 方法来判断内容相等，若他们内容相等则返回 true
+
+  ```java
+  public class test1 {
+      public static void main(String[] args) {
+          String a = new String("ab"); // a 为一个引用
+          String b = new String("ab"); // b为另一个引用,对象的内容一样
+          String aa = "ab"; // 放在常量池中
+          String bb = "ab"; // 从常量池中查找
+          if (aa == bb) // true
+              System.out.println("aa==bb");
+          if (a == b) // false，非同一对象
+              System.out.println("a==b");
+          if (a.equals(b)) // true
+              System.out.println("aEQb");
+          if (42 == 42.0) { // true
+              System.out.println("true");
+          }
+      }
+  }
+  ```
+  
+  说明：
+    - String 中的 equals() 方法是被重写过的，因为 Object 的 equals() 方法比较的对象的内存地址，而 String 的 equals() 方法比较的是对象的值
+    - 当创建 String 类型的对象是，虚拟机会在常量池中查找有没有已经存在的值和要创建的值相同的对象，如果有就把它赋值给当前引用，如果没有就在常量池中创建一个 String 对象
+
+#### hashCode 与 equals
+
+hashCode() 作用是获取哈希码，也称为散列码。它实际上是返回一个 int 整数。这个哈希码的作用是确定该对象在哈希表中的索引位置。hashCode() 定义在 JDK 的 Object.java 中，这意味着 Java 中的任何类都包含有 hashCode() 函数
+
+散列表存储的是键值对(key->value)，它的特点是，能根据 “键” 快速的检索出对应的 “值”。这其中就利用到了 **散列码**
+
+- 为什么要有 hashCode
+  
+  当把对象加入 HashSet 时，HashSet 会先计算对象的 hashCode 值来判断对象的加入位置，同时也会与其他已经加入的对象 hashCode 值作比较，如果没有相符的 hashCode, HashSet 会假设对象没有重复出现。但是如果发现有相同的 hashCode 值，这时会调用 equals() 方法来检查 hashCode 相等的对象是否相同。如果两者相同，HashSet 就不会让其加入成功。如果不同，就会重新散列到其他位置。这样就大大减少了 equals 次数，相应就大大提供了执行速度
+
+- hashCode() 与 equals() 的相关规定
+  
+  - 如果两个对象相等，则 hashCode 一定也是相同的
+  - 两个对象相等，对两个对象分别调用 equals() 方法都返回 true
+  - 两个对象有相同的 hashCode 值，它们不一定相等
+
+  因此， equals() 方法被覆盖过， 则 hashCode() 方法也必须被覆盖；hashCode() 的默认行为是对堆上的对象产生独特值，如果没有重写 hashCode()，则该 class 的两个对象无论如何都不会相等（即使两个对象指向相同的数据）
+
+- 对象的相等 和 指向它们的引用相等，两者有什么不同？
+  
+  对象的相等，比较的是内存中存放的内容是否相等；引用相等比较的是它们指向的内存地址是否相等
+
+### 值传递
+
+当一个对象被当作参数传递到一个方法后，此方法可改变这个对象的属性，并可返回改变后的结果，那么到底是值传递还是引用传递呢？
+
+Java 语言的方法调用，只支持参数的值传递。当一个对象实例被传递到方法中时，参数的值就是对该对象的引用。对象的属性可以在被调用的过程中被改变，但对对象引用的改变是不会影响到调用者的。
+
+#### 为什么Java中只有值传递
+
+这里回顾一下有关参数传递的专业术语。按值调用(Call by Value)表示方法接收的是调用者提供的值；而按引用调用(Call by Reference)表示方法接收的是调用者提供的变量地址。一个方法可以修改传递引用所对应的变量值，而不能修改传递值调用所对应的变量值。
+
+Java程序设计语言总是采用按值调用。也就是说方法得到的是所有参数值的一个拷贝，也就是说方法不能修改任何传递给它的参数变量的内容。
+
+#### 3个例子说明值传递
+
+- example 1
+
+  ```java
+  public static void main(String[] args) {
+      int num1 = 10;
+      int num2 = 20;
+  
+      swap(num1, num2);
+  
+      System.out.println("num1 = " + num1);
+      System.out.println("num2 = " + num2);
+  }
+  
+  public static void swap(int a, int b) {
+      int temp = a;
+      a = b;
+      b = temp;
+  
+      System.out.println("a = " + a);
+      System.out.println("b = " + b);
+  }
+  ```
+
+  结果，交换的是 `num1` 和 `num2`的拷贝，这两个变量本身并没有交换。
+
+  ```bash
+  a = 20
+  b = 10
+  num1 = 10
+  num2 = 20
+  ```
+
+- example 2
+
+  ```java
+  public static void main(String[] args) {
+      int[] arr = { 1, 2, 3, 4, 5 };
+      System.out.println(arr[0]);
+      change(arr);
+      System.out.println(arr[0]);
+  }
+
+  public static void change(int[] array) {
+      // 将数组的第一个元素变为0
+      array[0] = 0;
+  }
+  ```
+
+  结果，`array` 是 `arr` 的一个拷贝，它们都是指向同一个数据对象，所以方法中对引用对象的改变反应到了对象上。
+
+  ```bash
+  1
+  0
+  ```
+
+  很多程序设计语言（特别是 C++）提供了两种参数传递的方式：值传递和引用传递。有些程序员认为Java程序设计语言对对象采用的是引用传递，实际上，这种理解是不对的。通过下面一个例子详细说明。
+
+- example 3
+  
+  ```java
+  public class Test {
+      public static void main(String[] args) {
+          // TODO Auto-generated method stub
+          Student s1 = new Student("小张");
+          Student s2 = new Student("小李");
+          Test.swap(s1, s2);
+          System.out.println("s1:" + s1.getName());
+          System.out.println("s2:" + s2.getName());
+      }
+
+      public static void swap(Student x, Student y) {
+          Student temp = x;
+          x = y;
+          y = temp;
+          System.out.println("x:" + x.getName());
+          System.out.println("y:" + y.getName());
+      }
+  }
+  ```
+
+  结果，`x` 是 `s1`的拷贝，`y` 是 `s2` 的拷贝，它们都是指向对象的引用，方法交换的是两个拷贝，对原来的引用变量没有影响。
+
+  ```bash
+  x:小李
+  y:小张
+  s1:小张
+  s2:小李
+  ```
+
+- 总结
+  
+  Java程序设计语言对对象采用的不是引用调用，实际上，对象引用是按值传递的。
+
+  - 一个方法不能修改基本数据类型的参数
+  - 一个方法能够改变一个对象参数的状态
+  - 一个方法不能让对象参数引用一个新对象
+
+- 值传递和引用传递的区别
+  
+  - 值传递： 指在方法调用时，传递的参数是按值的拷贝传递，传递的是值的拷贝。传递后就互不相关
+  - 引用传递：值在方法调用时，传递的参数是按引用进行传递，其实传递的是引用地址，也就是变量所对应的内存空间地址。传递的是值的引用，也就是传递前后都是指向同一个引用（同一个内存空间）
+
+## Java包
+
+### JDK 中常用的包
+
+- java.lang 系统的基础类
+- java.io 所有输入输出有关的类，比如文件操作
+- java.nio 为了晚上IO包中的功能，提高IO包中性能而写的一个新包
+- java.net 与网络相关的类
+- java.util 这是系统辅助类，特别是集合类
+- java.sql 数据库操作的类
+
+### import java 和 javax 区别
+
+刚开始的时候 JavaAPI 所必需的包是 java 开头的包，javax 当时只是扩展 API 包来说使用。然而随着时间的推移，javax 逐渐的扩展成为 Java API 的组成部分。但是，将扩展从 javax 包移动到 java 包将太麻烦了，最终会破坏一堆现有的代码。因此，最终决定 javax 包将成为标准API的一部分。
+
+所以，实际上java和javax没有区别。这都是一个名字。
+
+### IO流
+
+- Java中流分为一下几种
+  
+  - 按照流的流向，分为输入流和输出流
+  - 按照操作单元，分为字节流和字符流
+  - 按流的角色，分为节点流和字符流
+
+Java IO流共涉及到40多个类，这些类看上去很杂乱，但实际上很有规则，而且彼此之间存在非常紧密的联系，Java IO流中的40多个类都是从如下4个抽象基类中派生出来的
+
+- InputStream/Reader 所有的输入流基类，前者是字节输入流，后者是字符输入流
+- OutputStream/Writer 所有输出类的基类，前者是字节输出流，后者是字符输出流
+
+按操作方式分类
+
+![操作方式分类](img/java-io-action-type.jpg)
+
+按操作对象分类
+
+![操作对象分类](img/java-io-action-obj.jpg)
+
+### BIO,NIO,AIO
+
+- BIO：Block IO 同步阻塞 IO，就是我们平时使用的传统IO，它的特点是模式简单使用方便，并发能力低
+
+  同步阻塞 I/O 模式，数据的读取写入必须阻塞在一个线程内等待其完成。在活动连接数不是特别高（小于单机1000）的情况下，这种模型是比较不错的，可以让每个连接专注于自己的I/O并且模型简单，也不用过多考虑系统的过载、限流等问题。线程池本身就是一个漏斗，可以缓冲一些系统处理不了的连接或请求。但是，当面对十万甚至百万级的连接时，传统的 BIO 模型是无能为力的
+
+- NIO：Non IO 同步非阻塞 IO，是传统IO的升级，客户端和服务端通过 Channel （通道）通讯，实现了多路复用
+
+  在Java 1.4 中引入了 NIO 框架，对应 java.io 包，提供了 `Channel`, `Selector`, `Buffer` 等抽象。NIO 的 `N` 可以理解为Non-blocking，不是单纯的 `New`。它支持面向缓冲的，基于通道的 I/O 操作方法。NIO 提供了与传统 BIO 模型中的 `Socket` 和 `ServerSocket` 向对应的 `SocketChannel` 和 `ServerSocketChannel` 两种不同的套接字通道实现，两种通道都支持阻塞和非阻塞两种模式。阻塞模式使用像传统的 BIO 一样，比较简单，但是性能和可靠性都不好；非阻塞模式正好与之相反。对于低负载、低并发的应用程序，可以使用同步阻塞I/O来提升开发速率和更好的维护性；对于负载高、并发高的网络应用程序，应使用 NIO 的非阻塞模式来开发
+
+- AIO：Asynchronous IO 是 NIO的升级，也叫NIO2，实现了异步非阻塞IO，异步IO的操作基于事件和回调机制
+  
+  在Java 7中引入了 NIO 的改进版 NIO 2，它是异步非阻塞的I/O模型。异步I/O是基于事件和回调机制实现的，也就是应用操作之后直接返回，不会阻塞在那里，当后台处理完成，操作系统会通知相应的线程进行后续的操作。AIO是异步I/O的缩写，虽然NIO在网络操作中，提供了非阻塞的方法，但是NIO的IO行为还是同步的。对于NIO来说，我们的业务线程是在I/O操作准备好时，得到通知，接着由这个线程自行进行I/O操作，I/O操作本身是同步的。AIO的应用还不算特别广泛，Netty之前考虑过使用 AIO，后来放弃使用了（为什么呢？可以了解下哦）
+
+### Files 常用方法 
+
+```java
+Files.exists(); // 检测文件路径是否存在
+Files.createFile(); // 创建文件
+Files.createDirectory(); // 创建文件夹
+Files.delete(); // 删除一个文件或者文件夹
+Files.copy(); // 复制文件
+Files.move(); // 移动文件
+Files.size(); // 查看文件个数
+Files.read(); // 读取文件
+Files.write(); // 写入人文件
+```
+
+## 反射
+
+Java反射机制是在运行状态中，对于任意一个类，都能够知道这个类所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象方法的功能称为Java语言的反射机制
+
+- 静态编译
+
+  在编译时确定类型，绑定对象
+
+- 动态编译
+  
+  运行时确定类型，绑定对象
+
+### 反射机制的优缺点
+
+- 优点
+  
+  运行期类型的判断，动态加载类，提高代码灵活度
+
+- 缺点
+
+  性能平静瓶颈，反射相当于一系列的解释操作，通知JVM要做的事，性能比直接的Java代码要慢很多
+
+### 反射机制的应用场景
+
+反射是框架设计的灵魂。在我们平时的项目开发中，基本上很少会直接使用到反射机制，但不能说反射机制没有用，实际上很多设计、开发都与反射机制有关，例如模块化的开发，通过反射去调用对应的字节码；动态代理设计模式也采用了反射机制，还有我们日常使用的 Spring/Hibernate 等框架也大量使用到了反射机制
+
+- 举例
+  
+  1. 我们在使用JDBC连接数据库时使用 `Class.forName()` 通过反射加载数据库的驱动程序
+  2. Spring 框架也用到很多反射机制，最经典的就是 xml 的配置模式。Spring 通过 xml 配置模式装在 Bean 的过程：
+     1. 将程序内所有的 xml 和 properties 配置文件加载到内存中
+     2. Java类里面解析 xml 或 properties 里面的内容，得到对应实体类的字节码字符串以及相关的属性信息
+     3. 使用反射机制，根据这个字符串获取某个类的 `Class` 实例
+     4. 动态配置实例的属性
+
+### Java 获取反射的3中方法
+
+1. 通过 `new` 对象实现反射机制
+2. 通过路径实现反射机制
+3. 通过类名实现反射机制
+
+```java
+public class Student {
+    private int id;
+    String name;
+    protected boolean sex;
+    public float score;
+}
+
+public class Get {
+    public static void main(String[] args) throws ClassNotFoundException {
+        // 方式 1
+        Student stu = new Student();
+        Class obj1 = stu.getClass();
+        System.out.println(obj1.getName());
+        // 方式 2
+        Class obj2 = Class.forName("fanshe.Student");
+        System.out.println(obj2.getName());
+        // 方式 3
+        Class obj3 = Student.class
+        System.out.println(obj3.getName());
+    }
+}
+```
+
+## 常用 API
+
+### String 相关
+
+- 字符型常量字符串常量的差别
+  1. 形式上，字符常量是单引号引起的一个字符；字符串常量是双引号引起的若干个字符
+  2. 含义上，字符常量相当于一个整型值(ASCII值)，可以参加表达式运算；字符串常量代表一个地址值（该字符串在内存中存放的位置）
+  3. 占内存大小，字符常量只占一个字节；字符串常量占若干个字节（至少一个字符结束标志）
+
+- 什么是字符串常量池
+  
+  字符串常量池位于堆内存中，专门用来存储字符串常量，可以提高内存的使用率，避免开辟多个空间存储相同的字符串，在创建字符串时 JVM 会首先检查字符串常量池，如果该字符串已经存在池中，则返回它的引用，如果不存在，则实例化一个字符串放在池中，并返回其引用
+
+- String 是基本数据类型吗
+
+  不是，Java中基本数据类型只有8个：byte, short, int, long, float, double, char, boolean；除了基本类型，其他的都是引用类型，Java 5 之后引入的枚举类型也是一种比较特殊的引用类型
+
+- String 有哪些特性
+  - 不变性，String是只读字符串，是一个典型的 `immutable` 对象，对它进行任何操作，其实都是创建一个新对象，再把引用指向该对象。不变模式的主要作用是在当一个对象需要被多个线程共享并频繁访问时，可以保证数据一致性
+  - 常量池优化，String对象创建之后，会在字符串常量池中进行缓存，如果下次创建同样的对象时，会直接返回缓存的引用
+  - final，使用 `final` 来定义 String，表示 String 不能被继承，提高了系统的安全性
+
+- String 类为什么是不可变的
+  
+  简单来说就是 String 类利用了 final 修饰的 char 类型数组存储字符
+
+  ```java
+  /** The value is used for character storage. */
+  private final char value[];
+  ```
+
+  String 的内容是不可变的，String 变量所指向的内存地址是可变的
+
+  可以通过反射修改所谓的 **不可变** 对象
+
+  ```java
+  // 创建字符串"Hello World"， 并赋给引用s
+  String s = "Hello World";
+
+  System.out.println("s = " + s); // Hello World
+
+  // 获取String类中的value字段
+  Field valueFieldOfString = String.class.getDeclaredField("value");
+
+  // 改变value属性的访问权限
+  valueFieldOfString.setAccessible(true);
+
+  // 获取s对象上的value属性的值
+  char[] value = (char[]) valueFieldOfString.get(s);
+
+  // 改变value所引用的数组中的第5个字符
+  value[5] = '_';
+
+  System.out.println("s = " + s); // Hello_World
+  ```
+
+  用反射可以访问私有成员，然后反射出 String 对象的 value 属性，进而通过改变获得的 value 引用改变数组的结构。但是一般不这么做
+
+- String str i = "str" 与 String str = new String("str") 一样吗
+  
+  不一样，因为内存的分配方式不同。`String str i = "str"` 的方式，Java虚拟机会将变量分配到常量池中；`String str = new String("str")` 的方式，则会被分配到堆内存中
+
+- String s = new String("xyz") 创建了几个字符串对象
+
+  两个对象，一个是静态区 `xyz`，一个是 `new` 创建在堆上的对象
+
+  ```java
+  String str1 = "hello"; //str1指向静态区
+  String str2 = new String("hello");  //str2指向堆上的对象
+  String str3 = "hello";
+  String str4 = new String("hello");
+  System.out.println(str1.equals(str2)); //true
+  System.out.println(str2.equals(str4)); //true
+  System.out.println(str1 == str3); //true
+  System.out.println(str1 == str2); //false
+  System.out.println(str2 == str4); //false
+  System.out.println(str2 == "hello"); //false
+  str2 = str1;
+  System.out.println(str2 == "hello"); //true
+  ```
+
+- 如何将字符串反转
+  
+  使用 `StringBuilder` 或者 `StringBuffer` 的 `reverse()` 方法
+
+  ```java
+  // StringBuffer reverse
+  StringBuffer stringBuffer = new StringBuffer();
+  stringBuffer. append("abcdefg");
+  System. out. println(stringBuffer. reverse()); // gfedcba
+  // StringBuilder reverse
+  StringBuilder stringBuilder = new StringBuilder();
+  stringBuilder. append("abcdefg");
+  System. out. println(stringBuilder. reverse()); // gfedcba
+  ```
+
+- 数组没有 `length()` 方法，有 `length` 属性，`String` 有 `length()` 方法
+
+- String 类常用的方法
+  
+  ```java
+  indexOf(); // 返回制定字符的索引
+  charAt(); // 返回指定索引处的字符
+  replace(); // 字符串替换
+  trim(); // 去除字符串两端空白
+  split(); // 分割字符，返回一个分割后的字符串数组
+  getBytes(); // 返回字符串的 byte 类型数组
+  length(); // 返回字符串长度
+  toLowerCase(); // 将字符串转成小写字符
+  toUpperCase(); // 将字符串转成大写字符
+  subString(); // 截取字符串
+  equals(); // 字符串比较
+  ```
