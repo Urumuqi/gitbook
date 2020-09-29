@@ -59,6 +59,7 @@
   - [克莱顿-克里斯坦森](spark/克莱顿-克里斯坦森/创新者的窘境.md)
   - [2020-05](thinking/2020-05/sunk-cost.md)
     - [Sunk Cost](thinking/2020-05/sunk-cost.md)
+  - [2020-09 甘特图](thinking/2020-09/ganttproject.md)
 
 - [菜鸟](newbie/index.md)
   - [blog摘记](newbie/note_1.md)
