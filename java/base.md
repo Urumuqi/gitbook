@@ -820,3 +820,81 @@ public class Get {
   subString(); // 截取字符串
   equals(); // 字符串比较
   ```
+
+- 使用 HashMap 的时候，用 String 做 key 有什么好处
+
+  HashMap 内部实现是通过 key 的 hashcode 来确定 value 的存储位置，以为字符串是不可变的，所以当字符串创建时，它的 hashcode 被缓存下来，不需要再次计算，所以相比于其他对象更快
+
+- String、StringBuffer、StringBuilder 的区别是什么？为什么 String 是不可变的
+  - 可变性
+
+    String 类中是使用字符数组保存字符串： `private final char value[]`，所以 String 对象是不可变的；
+
+    StringBuffer和StringBuilder 都是继承自 AbstractStringBuilder 类，在 AbstractStringBuilder 中也是使用字符数组保存字符串 `char[] value`，两种对象都是可变的
+
+  - 线程安全
+
+    String对象是不可变的，也就可以理解为常量，线程安全；
+
+    AbstractStringBuilder 是 StringBuilder 和 StringBuffer 的公共父类，定义了一些字符串的基本操作，比如：expandCapacity, append, insert, indexOf 等公共方法；
+
+    StringBuffer 对方法加了同步锁或者对调用的方法加了同步锁，所以是线程安全的；
+
+    StringBuilder 并没有对方法加同步锁，所以是非线程安全的；
+
+  - 性能
+
+    每次对 String 类型进行改变的时候，都会生成一个新的 String 对象，然后将指针指向新的对象。
+
+    StringBuffer 对象每次都会对 StringBuffer 对象本身进行操作，而不是产生新的对象并改变引用。
+
+    相同情况下使用 StringBuilder 相比使用 StringBuffer 只有10%~15%的性能提升，但去要冒多线程不安全的风险。
+
+- String,StringBuffer,StringBuilder 使用总结
+  - 操作少量数据用 String
+  - 单线程操作字符串缓冲区操作大量数据 StringBuilder
+  - 多线程操作字符串缓冲区大量数据 StringBuffer
+
+### Date 相关
+
+待补充
+
+### 包类相关
+
+- 自动装箱和拆箱
+  - 装箱：将基本类型用他们对应的引用类型包装起来
+  - 拆箱：将包装数据类型转换为基本数据类型
+
+- int 和 Integer 有什么区别
+
+  Java 是近乎纯洁的面向对象编程语言，但是为了编程方便还是引入了基本数据类型。为了将这些基本数据类型当作对象处理，Java 为每个基本类型都引入了对应的包装类。int 的包装类就是 Integer，从 Java5 开始引入了自动装箱和拆箱机制，使二者可以相互转换
+  
+  原始类型 ｜ boolean | char | byte | short | int | long | float | double
+  ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----
+  包装类型 ｜ Boolean | Character | Byte | Short | Integer | Long | Float | Double
+
+- Integer a = 127 和 Integer b = 127 相等吗 ？
+
+  对于对象引用类型， == 比较的是对象的内存地址
+  对于基本数据类型，== 比较的是值
+
+  如果整型字面量的值是 -128 到 127 之间，那么自动装箱是不会 new 新的 Integer 对象，而是直接引用常量池中的 Integer 对象，超过范围 a == b 的结果是 `false`
+
+  ```java
+  public static void main(String[] args) {
+      Integer a = new Integer(3);
+      Integer b = 3;  // 将3自动装箱成Integer类型
+      int c = 3;
+      System.out.println(a == b); // false 两个引用没有引用同一对象
+      System.out.println(a == c); // true a自动拆箱成int类型再和c比较
+      System.out.println(b == c); // true
+
+      Integer a1 = 128;
+      Integer b1 = 128;
+      System.out.println(a1 == b1); // false
+
+      Integer a2 = 127;
+      Integer b2 = 127;
+      System.out.println(a2 == b2); // true
+  }
+  ```
