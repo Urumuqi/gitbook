@@ -49,6 +49,7 @@
 
 - [微信开发](wechat/index.md)
   - [微信支付流程](/wechat/wechat_pay/index.md)
+  - [微信小程序运行机制](/wechat/小程序运行机制.md)
 
 - [读书](spark/index.md)
   - [浪潮之巅](spark/浪潮之巅/index.md)
