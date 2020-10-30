@@ -76,7 +76,7 @@
     - [IaaS-PaaS-SaaS](newbie/thoughts/2020-06/iaas-paas-saas.md)
     - [2020-07-21](newbie/thoughts/2020-07/plan.md)
     - [REPL](newbie/REPL.md)
-  - [php]
+  - [php](newbie/index.md)
     - [nginx和php-fpm进程通信](newbie/php/nignx_php-fpm.md)
 
 - [软件工程](software_engineering/index.md)
