@@ -6,4 +6,4 @@ clean:
 	rm -rf gitbook.tar.gz
 pack: _book
 	tar zcf gitbook.tar.gz _book
-	scp gitbook.tar.gz blog@blog:/home/blog/gitbook/
+	scp gitbook.tar.gz blog@blog:/home/www/blog/
