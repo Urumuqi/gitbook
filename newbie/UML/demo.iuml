@@ -45,3 +45,39 @@ Speaker "1" *-- "*" Topic
 Event "1" o-- "*" Speaker
 Event "1" o-- "*" Attendee
 @enduml
+
+@startuml
+scale 3
+
+class Goal {
+    -name: string
+    -type: integer
+    -imgs: resource
+    -tag: string
+}
+
+class PunchCardRecord {
+    -id: integer
+    -goalId: integer
+    -userId: integer
+    -userName: integer
+    -imgs: resoruce
+    -notes: string
+    -createdAt: datetime
+    -updatedAt: datetime
+}
+
+class RecordList {
+    -id: integer
+    -userId: integer
+    -totalCnt: integer
+    -gymCnt: integer
+    -learningCnt: integer
+}
+
+class User {
+    -id: integer
+    -username: string
+}
+
+@enduml
