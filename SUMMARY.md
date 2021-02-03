@@ -37,6 +37,8 @@
   - [JPA-Hibernate](java/JPA-Hibernate.md)
   - [java_app.sh](java/java_app.md)
   - [Java基础知识](java/base.md)
+  - [2021/02/03](./)
+    - [maven安装本地jar包](java/maven_install_local_jar.md)
 
 - [linux](linux/index.md)
   - [ubuntu swap](linux/swap.md)

@@ -1,4 +1,6 @@
 {
+    "title": "知世说博客",
+    "author": "zss team",
     "plugins": [
         "-lunr",
         "-search",
@@ -24,7 +26,7 @@
         "tbfed-pagefooter": {
             "copyright": "Copyright &copy wuqi@知世说 2020",
             "modify_label": "article last edit time : ",
-            "modify_format": "YYYY-MM-DD HH:mm:ss"
+            "modify_format": "YYYY-MM-DD HH:mm"
         },
         "prism": {
             "css": [
