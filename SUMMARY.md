@@ -9,7 +9,7 @@
     - [connect2mysqld](mysql/newbie/2020-05/connect2mysqld.md)
     - [mysql.ERROR.1819(HY000)](mysql/newbie/2020-05/mysql_ERROR_1819_HY000.md)
   - [2020-06](mysql/newbie/2020-06/23.md)
-  - [innodb](mysql/innodb.md)
+  - [innodb](mysql/innodb/innodb.md)
 
 - [zss](zss/README.md)
   - [部署备忘](zss/deploy.md)
