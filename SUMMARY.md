@@ -10,6 +10,7 @@
     - [mysql.ERROR.1819(HY000)](mysql/newbie/2020-05/mysql_ERROR_1819_HY000.md)
   - [2020-06](mysql/newbie/2020-06/23.md)
   - [innodb](mysql/innodb/innodb.md)
+    - [事务](mysql/innodb/transaction.md)
 
 - [zss](zss/README.md)
   - [部署备忘](zss/deploy.md)
@@ -65,6 +66,7 @@
   - [2020-09 甘特图](thinking/2020-09/ganttproject.md)
 
 - [菜鸟](newbie/index.md)
+  - [BPM](bpmn/index.md)
   - [blog摘记](newbie/note_1.md)
   - [gRPC](newbie/gRPC/index.md)
     - [proto3](newbie/gRPC/proto3.md)
