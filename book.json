@@ -18,7 +18,10 @@
         "search-pro",
         "pageview-count",
         "tbfed-pagefooter",
-        "github"
+        "github",
+        "hide-element",
+        "insert-logo",
+        "popup"
     ],
     "pluginsConfig": {
         "github": {
@@ -26,13 +29,20 @@
         },
         "tbfed-pagefooter": {
             "copyright": "Copyright &copy wuqi@知世说 2024",
-            "modify_label": "article last edit time : ",
+            "modify_label": "article last edit at : ",
             "modify_format": "YYYY-MM-DD HH:mm"
         },
         "prism": {
             "css": [
                 "prismjs/themes/prism-tomorrow.css"
             ]
+        },
+        "hide-element": {
+            "elements": [".gitbook-link"]
+        },
+        "insert-logo": {
+            "url": "",
+            "style": ""
         }
     }
 }
