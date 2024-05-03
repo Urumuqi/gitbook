@@ -1,6 +1,7 @@
 {
     "title": "知世说博客",
-    "author": "zss team",
+    "author": "ZSS's Team",
+    "output.name": "ZSS's Blog",
     "plugins": [
         "-lunr",
         "-search",
