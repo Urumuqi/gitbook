@@ -64,6 +64,7 @@
   - [2020-05](thinking/2020-05/sunk-cost.md)
     - [Sunk Cost](thinking/2020-05/sunk-cost.md)
   - [2020-09 甘特图](thinking/2020-09/ganttproject.md)
+  - [2024-05-05 随笔](thinking/2024-05/2024-05-05-随笔.md)
 
 - [菜鸟](newbie/index.md)
   - [BPM](bpmn/index.md)
