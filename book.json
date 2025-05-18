@@ -35,7 +35,10 @@
         "prism": {
             "css": [
                 "prismjs/themes/prism-tomorrow.css"
-            ]
+            ],
+            "lang": {
+                "json": "javascript"
+            }
         },
         "hide-element": {
             "elements": [".gitbook-link"]
