@@ -2,6 +2,9 @@
 
 - [Introduction](README.md)
 
+- [Python](/python/conda_best_practice.md)
+  - [Conda 环境管理最佳实践总结](/python/conda_best_practice.md)
+
 - [mysql](mysql/README.md)
   - [2020-05](mysql/newbie/2020-05/index.md)
     - [12](mysql/newbie/2020-05/12.md)
